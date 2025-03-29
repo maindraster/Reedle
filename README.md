@@ -1,5 +1,5 @@
 <div align=center>
-<img src="./reedle.png"/>
+<img src="./reedle.png" width="200px"/>
 </div>
 
 <h1 align="center"> hAide</h1>
