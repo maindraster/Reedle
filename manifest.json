@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Reedle",
+    "version": "1.0",
+    "description": "AI网页信息过滤助手，总结、整理、评估标签页内容，本地模型版本",
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",   
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "tabs",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://api.openai.com/*",
+        "http://localhost/*",
+        "<all_urls>" 
+    ],
+    "action": {
+        "default_title": "打开侧边栏",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png",   
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [{
+        "resources": ["sidebar.html", "sidebar.js", "aggregator.html", "aggregator.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["contentScript.js"],
+            "run_at": "document_idle"
+        }
+    ]
+}
+  

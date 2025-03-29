@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    #optionsBtn {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+    }
+    #summaryPage, #optionsPage {
+      transition: display 0.3s;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    #saveBtn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      margin-right: 10px;
+    }
+    #backBtn {
+      background-color: #f0f0f0;
+    }
+    #summary {
+      margin-top: 15px;
+    }
+    
+    /* 新增大按钮样式 */
+    .feature-buttons {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: calc(50% - 10px);
+      height: 100px;
+      background-color: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    
+    .feature-button:hover {
+      background-color: #f0f0f0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .feature-button i {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #5a5a5a;
+    }
+    
+    .feature-button.primary i {
+      color: #4285f4;
+    }
+    
+    .feature-button.secondary i {
+      color: #673ab7;
+    }
+    
+    /* 新增设置分组样式 */
+    .settings-section {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #f8f9fa;
+    }
+    
+    .settings-section h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .settings-toggle {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .settings-toggle input[type="checkbox"] {
+      margin-right: 10px;
+      width: auto;
+    }
+  </style>
+  <!-- 添加图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="header">
+    <h2 id="pageTitle">网页总结</h2>
+    <div>
+      <button id="optionsBtn">设置</button>
+    </div>
+  </div>
+
+  <div id="summaryPage">
+    <div class="feature-buttons">
+      <div class="feature-button primary" id="summarizeBtn">
+        <i class="fas fa-file-alt"></i>
+        <span>生成摘要</span>
+      </div>
+      <div class="feature-button secondary" id="aggregateBtn">
+        <i class="fas fa-vial"></i>
+        <span>试毒</span>
+      </div>
+    </div>
+    <div id="summary"></div>
+  </div>
+
+  <div id="optionsPage" style="display:none">
+    <div class="settings-section">
+      <h3>本地模型设置</h3>
+      <div class="form-group">
+        <label for="modelUrl">模型接口地址：</label>
+        <input type="text" id="modelUrl">
+      </div>
+      <div class="form-group">
+        <label for="modelName">模型名称：</label>
+        <input type="text" id="modelName">
+      </div>
+      <div class="form-group">
+        <label for="temperature">温度 (0-1)：</label>
+        <input type="number" id="temperature" min="0" max="1" step="0.1">
+      </div>
+    </div>
+    
+    <div class="settings-section">
+      <h3>API设置</h3>
+      <div class="settings-toggle">
+        <input type="checkbox" id="useApiToggle">
+        <label for="useApiToggle">使用API接入</label>
+      </div>
+      <div id="apiSettings">
+        <div class="form-group">
+          <label for="apiKey">API Key：</label>
+          <input type="password" id="apiKey">
+        </div>
+        <div class="form-group">
+          <label for="apiBaseUrl">Base URL：</label>
+          <input type="text" id="apiBaseUrl" placeholder="https://api.openai.com/v1">
+        </div>
+        <div class="form-group">
+          <label for="apiModel">模型：</label>
+          <input type="text" id="apiModel" placeholder="gpt-3.5-turbo">
+        </div>
+        <div class="form-group">
+          <label for="apiMaxToken">最大Token数：</label>
+          <input type="number" id="apiMaxToken" min="100" max="16000" value="2000">
+        </div>
+        <div class="form-group">
+          <label for="apiTemperature">温度 (0-1)：</label>
+          <input type="number" id="apiTemperature" min="0" max="1" step="0.1" value="0.7">
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <button id="saveBtn">保存设置</button>
+      <button id="backBtn">返回</button>
+    </div>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>
