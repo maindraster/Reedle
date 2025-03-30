@@ -2,7 +2,7 @@
 <img src="./reedle.png" width="200px"/>
 </div>
 
-<h1 align="center"> hAide</h1>
+<h1 align="center">Reedle</h1>
 <p align="center"><a href="https://www.indratang.top/product/reedle">中文版</a> • <a href="#installation">Install</a> • <a href="#features">Features</a></p>
 <p align="center">Hiden AI supports chatting anywhere you write.</p>
 
